@@ -1,0 +1,681 @@
+/* ================================================================
+   HabitQuest — animations.css
+   رسوم متحركة وتأثيرات احترافية تعتمد على متغيرات الموقع الأصلية
+   (--accent, --bg-card, --text-primary, --shadow-glow, ...)
+   تتكيف تلقائياً مع data-theme="dark" و data-theme="light"
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   0. متغيرات مساعدة خاصة بالحركات (مبنية على متغيرات الموقع)
+   ---------------------------------------------------------------- */
+:root {
+    --anim-fast: 0.2s;
+    --anim-base: 0.5s;
+    --anim-slow: 0.9s;
+    --anim-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --anim-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --anim-stagger-step: 60ms;
+    --glow-color: var(--accent-glow, rgba(94,196,212,0.5));
+}
+
+/* ================================================================
+   1. KEYFRAMES — تأثيرات الدخول (Entrance Animations)
+   ================================================================ */
+
+@keyframes hq-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes hq-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.98);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes hq-slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hq-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.03);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes hq-pop-in {
+    0%   { opacity: 0; transform: scale(0.4) rotate(-6deg); }
+    70%  { opacity: 1; transform: scale(1.08) rotate(2deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* ================================================================
+   2. KEYFRAMES — توهج، نبض، ارتفاع، اهتزاز
+   ================================================================ */
+
+@keyframes hq-glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(0,0,0,0), var(--shadow-md, 0 8px 28px rgba(0,0,0,0.16));
+    }
+    50% {
+        box-shadow: 0 0 32px var(--glow-color), var(--shadow-md, 0 8px 28px rgba(0,0,0,0.16));
+    }
+}
+
+@keyframes hq-badge-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 var(--glow-color);
+    }
+    50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 0 10px transparent, 0 0 26px 4px var(--glow-color);
+    }
+}
+
+@keyframes hq-ring-expand {
+    0%   { transform: scale(0.9); opacity: 0.55; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+@keyframes hq-btn-throb {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.045); }
+}
+
+@keyframes hq-icon-wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    20%      { transform: rotate(-12deg); }
+    40%      { transform: rotate(10deg); }
+    60%      { transform: rotate(-6deg); }
+    80%      { transform: rotate(4deg); }
+}
+
+@keyframes hq-icon-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@keyframes hq-icon-flutter {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25%      { transform: translateY(-2px) rotate(-4deg); }
+    50%      { transform: translateY(0) rotate(0deg); }
+    75%      { transform: translateY(2px) rotate(4deg); }
+}
+
+@keyframes hq-shake {
+    10%, 90% { transform: translateX(-1px); }
+    20%, 80% { transform: translateX(2px); }
+    30%, 50%, 70% { transform: translateX(-4px); }
+    40%, 60% { transform: translateX(4px); }
+}
+
+/* ================================================================
+   3. KEYFRAMES — عناصر خلفية وخاصة بالموقع
+   ================================================================ */
+
+/* الكرات الخلفية العائمة */
+@keyframes hq-orb-float {
+    0%   { transform: translate(0, 0) scale(1); opacity: 0.55; }
+    25%  { transform: translate(24px, -34px) scale(1.08); opacity: 0.7; }
+    50%  { transform: translate(-14px, 18px) scale(0.94); opacity: 0.45; }
+    75%  { transform: translate(-30px, -14px) scale(1.05); opacity: 0.65; }
+    100% { transform: translate(0, 0) scale(1); opacity: 0.55; }
+}
+
+/* موجة الضوء المتحركة على شريط الخبرة */
+@keyframes hq-xp-shimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(220%); }
+}
+
+@keyframes hq-xp-grow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+/* بريق (Shimmer) يمر على البطاقات */
+@keyframes hq-card-shimmer {
+    0%   { transform: translateX(-150%) skewX(-20deg); }
+    100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+/* نبض ضغط زر الإكمال */
+@keyframes hq-complete-pulse {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(0.86); }
+    60%  { transform: scale(1.18); }
+    100% { transform: scale(1); }
+}
+
+@keyframes hq-check-pop {
+    0%   { transform: scale(0) rotate(-45deg); opacity: 0; }
+    60%  { transform: scale(1.3) rotate(8deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes hq-streak-flame {
+    0%, 100% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 2px var(--glow-color)); }
+    50%      { transform: scale(1.12) translateY(-1px); filter: drop-shadow(0 0 8px var(--glow-color)); }
+}
+
+/* توست يدخل وينزلق */
+@keyframes hq-toast-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.9); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* توهج زجاجي متحرك للـ backdrop-filter */
+@keyframes hq-glass-sheen {
+    0%, 100% { backdrop-filter: blur(14px) saturate(140%); }
+    50%      { backdrop-filter: blur(18px) saturate(180%); }
+}
+
+@keyframes hq-border-glow {
+    0%, 100% { border-color: var(--border, rgba(255,255,255,0.08)); }
+    50%      { border-color: var(--accent); }
+}
+
+/* ================================================================
+   4. تأثيرات الدخول عند التحميل / التمرير
+   ================================================================ */
+
+.hq-fade-in {
+    animation: hq-fade-in var(--anim-base) var(--anim-ease) both;
+}
+
+.hq-slide-up,
+.card,
+.stat-card {
+    animation: hq-slide-up var(--anim-base) var(--anim-ease) both;
+    will-change: transform, opacity;
+}
+
+.hq-scale-in {
+    animation: hq-scale-in var(--anim-base) var(--anim-bounce) both;
+    will-change: transform, opacity;
+}
+
+.hq-pop-in {
+    animation: hq-pop-in var(--anim-base) var(--anim-bounce) both;
+    will-change: transform, opacity;
+}
+
+/* عناصر تُكشَف عند دخولها الشاشة عبر IntersectionObserver
+   (أضف class="hq-reveal" في HTML/JS، وأضف "is-visible" عند التقاطع) */
+.hq-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity var(--anim-slow) var(--anim-ease),
+                transform var(--anim-slow) var(--anim-ease);
+    will-change: transform, opacity;
+}
+.hq-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---- تأثير متدرج (Staggered) لعناصر الهابيت ---- */
+.habit-list .habit-item {
+    opacity: 0;
+    animation: hq-slide-up var(--anim-base) var(--anim-ease) forwards;
+    will-change: transform, opacity;
+}
+.habit-list .habit-item:nth-child(1)  { animation-delay: calc(var(--anim-stagger-step) * 1); }
+.habit-list .habit-item:nth-child(2)  { animation-delay: calc(var(--anim-stagger-step) * 2); }
+.habit-list .habit-item:nth-child(3)  { animation-delay: calc(var(--anim-stagger-step) * 3); }
+.habit-list .habit-item:nth-child(4)  { animation-delay: calc(var(--anim-stagger-step) * 4); }
+.habit-list .habit-item:nth-child(5)  { animation-delay: calc(var(--anim-stagger-step) * 5); }
+.habit-list .habit-item:nth-child(6)  { animation-delay: calc(var(--anim-stagger-step) * 6); }
+.habit-list .habit-item:nth-child(7)  { animation-delay: calc(var(--anim-stagger-step) * 7); }
+.habit-list .habit-item:nth-child(8)  { animation-delay: calc(var(--anim-stagger-step) * 8); }
+.habit-list .habit-item:nth-child(9)  { animation-delay: calc(var(--anim-stagger-step) * 9); }
+.habit-list .habit-item:nth-child(10) { animation-delay: calc(var(--anim-stagger-step) * 10); }
+.habit-list .habit-item:nth-child(n+11) { animation-delay: calc(var(--anim-stagger-step) * 11); }
+
+/* تدرّج مماثل لبطاقات الإحصائيات */
+.stats-grid .stat-card:nth-child(1) { animation-delay: 0ms; }
+.stats-grid .stat-card:nth-child(2) { animation-delay: 80ms; }
+.stats-grid .stat-card:nth-child(3) { animation-delay: 160ms; }
+.stats-grid .stat-card:nth-child(4) { animation-delay: 240ms; }
+.stats-grid .stat-card:nth-child(5) { animation-delay: 320ms; }
+.stats-grid .stat-card:nth-child(6) { animation-delay: 400ms; }
+
+/* ================================================================
+   5. البطاقات (Cards) — ارتفاع خفيف + توهج حدودي + Shimmer
+   ================================================================ */
+
+.card,
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--anim-fast) var(--anim-ease),
+                box-shadow var(--anim-fast) var(--anim-ease),
+                border-color var(--anim-fast) var(--anim-ease);
+    will-change: transform, box-shadow;
+}
+
+.card::before,
+.stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+        100deg,
+        transparent 0%,
+        rgba(255,255,255,0.16) 45%,
+        var(--glow-color) 50%,
+        rgba(255,255,255,0.16) 55%,
+        transparent 100%
+    );
+    transform: translateX(-150%) skewX(-20deg);
+    opacity: 0;
+    transition: opacity var(--anim-fast) ease;
+}
+
+.card:hover,
+.stat-card:hover,
+.card-glow:hover {
+    transform: translateY(-6px) scale(1.012);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-lg, 0 16px 48px rgba(0,0,0,0.22)),
+                0 0 0 1px var(--accent) inset,
+                0 0 28px var(--glow-color);
+}
+
+.card:hover::before,
+.stat-card:hover::before {
+    opacity: 1;
+    animation: hq-card-shimmer 1.1s var(--anim-ease);
+}
+
+.card:active,
+.stat-card:active {
+    transform: translateY(-2px) scale(0.995);
+}
+
+/* حاويات زجاجية (Glassmorphism) مع توهج متحرك */
+.modal,
+.card-glow,
+.chart-container {
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+.card-glow {
+    animation: hq-glass-sheen 4s ease-in-out infinite;
+    will-change: backdrop-filter;
+}
+
+/* ================================================================
+   6. الأزرار (Buttons)
+   ================================================================ */
+
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-icon {
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--anim-fast) var(--anim-ease),
+                box-shadow var(--anim-fast) var(--anim-ease),
+                filter var(--anim-fast) var(--anim-ease),
+                background-color var(--anim-fast) var(--anim-ease);
+    will-change: transform, box-shadow;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: 0 6px 20px var(--glow-color);
+}
+
+.btn-primary:hover {
+    animation: hq-btn-throb 1.4s var(--anim-ease) infinite;
+}
+
+.btn-primary:active,
+.btn-secondary:active,
+.btn:active,
+.btn-sm:active,
+.btn-xs:active {
+    transform: translateY(0) scale(0.94);
+    filter: brightness(0.96);
+}
+
+/* موجة نقر دائرية (ripple) خفيفة عبر توهج شعاعي */
+.btn::after,
+.btn-primary::after,
+.btn-secondary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity var(--anim-fast) ease, transform var(--anim-fast) ease;
+    pointer-events: none;
+}
+.btn:active::after,
+.btn-primary:active::after,
+.btn-secondary:active::after {
+    opacity: 0.55;
+    transform: scale(1.4);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.btn-icon {
+    border-radius: var(--radius-full, 9999px);
+}
+.btn-icon:hover {
+    box-shadow: 0 0 16px var(--glow-color);
+}
+.btn-icon:hover .icon-svg svg {
+    animation: hq-icon-wiggle 0.6s var(--anim-ease);
+}
+
+/* ================================================================
+   7. أيقونات SVG — دوران / رفرفة / اهتزاز خفيف
+   ================================================================ */
+
+.icon-svg svg {
+    transition: transform var(--anim-fast) var(--anim-ease),
+                filter var(--anim-fast) var(--anim-ease);
+    will-change: transform;
+}
+
+/* رفرفة خفيفة افتراضية عند تمرير الفأرة فوق أي أيقونة */
+.icon-svg:hover svg {
+    filter: drop-shadow(0 0 6px var(--icon-glow, var(--glow-color)));
+    animation: hq-icon-flutter 0.9s ease-in-out infinite;
+}
+
+/* أيقونات التنقل الجانبي: دوران بسيط */
+.nav-icon svg,
+.sidebar-nav .icon-svg svg {
+    transition: transform var(--anim-fast) var(--anim-bounce);
+}
+.sidebar-nav a:hover .icon-svg svg,
+.nav-icon:hover svg {
+    transform: rotate(-8deg) scale(1.12);
+}
+.sidebar-nav a.active .icon-svg svg {
+    animation: hq-icon-spin 0.6s var(--anim-ease);
+}
+
+/* أيقونة الشعار: دوران بطيء مستمر عند التحويم */
+.logo-icon-svg:hover svg {
+    animation: hq-icon-spin 1.4s linear infinite;
+}
+
+/* أيقونات المتجر: اهتزاز جذاب */
+.shop-icon:hover svg {
+    animation: hq-icon-wiggle 0.55s ease-in-out;
+}
+
+/* ================================================================
+   8. شريط الخبرة (XP Bar) — موجة ضوء متحركة
+   ================================================================ */
+
+.xp-bar-outer {
+    position: relative;
+    overflow: hidden;
+    background: var(--xp-bar-bg);
+    border-radius: var(--radius-full, 9999px);
+}
+
+.xp-bar-inner {
+    position: relative;
+    overflow: hidden;
+    transform-origin: left center;
+    animation: hq-xp-grow 1s var(--anim-ease) both;
+    background: linear-gradient(90deg, var(--accent), var(--accent2, var(--accent)));
+    will-change: transform;
+}
+
+.xp-bar-inner::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,0.55) 50%,
+        transparent 100%
+    );
+    animation: hq-xp-shimmer 2.2s linear infinite;
+    will-change: transform;
+}
+
+/* ================================================================
+   9. الكرات الخلفية (Orbs) — طفو حر
+   ================================================================ */
+
+.bg-orb {
+    will-change: transform, opacity;
+    animation: hq-orb-float 14s ease-in-out infinite;
+}
+.bg-orb:nth-of-type(2n) {
+    animation-duration: 18s;
+    animation-direction: reverse;
+}
+.bg-orb:nth-of-type(3n) {
+    animation-duration: 22s;
+    animation-delay: -4s;
+}
+.bg-orb:nth-of-type(4n) {
+    animation-duration: 16s;
+    animation-delay: -8s;
+}
+
+/* ================================================================
+   10. مستوى (Level Badge) — نبض مستمر
+   ================================================================ */
+
+.level-badge {
+    position: relative;
+    animation: hq-badge-pulse 2.6s ease-in-out infinite;
+    will-change: transform, box-shadow;
+}
+
+/* حلقة تتمدد وتتلاشى حول الشارة */
+.level-badge::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    border: 2px solid var(--accent);
+    opacity: 0.6;
+    animation: hq-ring-expand 2.6s ease-out infinite;
+    pointer-events: none;
+}
+
+/* حلقات التقدّم الدائرية (ring-container) */
+.ring-container circle,
+.ring-container .ring-value {
+    transition: stroke-dashoffset 0.8s var(--anim-ease);
+}
+
+/* ================================================================
+   11. عناصر الهابيت (Habit Items) — تفاعل + تأكيد الإنجاز
+   ================================================================ */
+
+.habit-item {
+    transition: transform var(--anim-fast) var(--anim-ease),
+                background-color var(--anim-fast) var(--anim-ease),
+                box-shadow var(--anim-fast) var(--anim-ease);
+    will-change: transform;
+}
+.habit-item:hover {
+    transform: translateX(-4px);
+    box-shadow: 0 4px 18px var(--glow-color);
+}
+[dir="rtl"] .habit-item:hover {
+    transform: translateX(4px);
+}
+
+.habit-streak {
+    display: inline-flex;
+    will-change: transform, filter;
+}
+.habit-streak svg,
+.habit-streak .icon-svg svg {
+    animation: hq-streak-flame 1.8s ease-in-out infinite;
+}
+
+/* زر التأكيد داخل الهابيت */
+.habit-check {
+    transition: transform var(--anim-fast) var(--anim-bounce),
+                background-color var(--anim-fast) ease,
+                box-shadow var(--anim-fast) ease;
+    will-change: transform;
+}
+.habit-check:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 14px var(--glow-color);
+}
+.habit-check:active,
+.habit-check.checked {
+    animation: hq-complete-pulse 0.5s var(--anim-bounce);
+}
+.habit-check.checked svg {
+    animation: hq-check-pop 0.45s var(--anim-bounce) both;
+}
+
+.habit-actions .btn-icon,
+.habit-actions .btn-xs {
+    transition: transform var(--anim-fast) var(--anim-ease), opacity var(--anim-fast) ease;
+}
+.habit-item:hover .habit-actions .btn-icon,
+.habit-item:hover .habit-actions .btn-xs {
+    transform: translateY(-2px);
+}
+
+/* ================================================================
+   12. أزرار الحفظ / الإلغاء داخل المودال
+   ================================================================ */
+
+.modal {
+    animation: hq-scale-in var(--anim-base) var(--anim-bounce) both;
+}
+.modal-body {
+    animation: hq-fade-in var(--anim-base) var(--anim-ease) 0.05s both;
+}
+.modal-save:hover {
+    animation: hq-btn-throb 1.2s ease-in-out infinite;
+}
+.modal-cancel:hover {
+    filter: brightness(0.94);
+}
+
+/* اهتزاز تنبيهي عند وجود خطأ (أضف class="hq-error" عبر JS) */
+.hq-error {
+    animation: hq-shake 0.45s ease-in-out;
+    border-color: var(--danger) !important;
+}
+
+/* ================================================================
+   13. التوست (Toast Notifications)
+   ================================================================ */
+
+.toast-container > * {
+    animation: hq-toast-in var(--anim-fast) var(--anim-bounce) both;
+}
+
+/* ================================================================
+   14. مخططات (Charts) — ظهور تدريجي للأعمدة
+   ================================================================ */
+
+.bar-chart-bar {
+    transform-origin: bottom;
+    animation: hq-scale-in var(--anim-base) var(--anim-ease) both;
+    will-change: transform, opacity;
+}
+.bar-chart-bar:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 0 14px var(--glow-color);
+}
+
+.stat-value {
+    display: inline-block;
+    transition: transform var(--anim-fast) var(--anim-ease);
+}
+.stat-card:hover .stat-value {
+    transform: scale(1.05);
+    text-shadow: 0 0 18px var(--glow-color);
+}
+
+/* ================================================================
+   15. توهج حدودي متحرك عام (قابل للتطبيق على أي عنصر)
+   ================================================================ */
+
+.hq-border-glow {
+    animation: hq-border-glow 2.4s ease-in-out infinite;
+}
+
+.hq-glow-pulse {
+    animation: hq-glow-pulse 2.4s ease-in-out infinite;
+}
+
+/* ================================================================
+   16. إمكانية الوصول — احترام تفضيل تقليل الحركة
+   ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .bg-orb,
+    .level-badge,
+    .level-badge::after,
+    .xp-bar-inner::after,
+    .card-glow,
+    .habit-streak svg {
+        animation: none !important;
+    }
+
+    .hq-reveal {
+        opacity: 1;
+        transform: none;
+    }
+}

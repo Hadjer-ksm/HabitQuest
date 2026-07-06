@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- الدائرة الخلفية -->
+  <rect x="10" y="10" width="80" height="80" rx="20" fill="#0a0e17" />
+  <!-- أو استخدم دائرة: <circle cx="50" cy="50" r="40" fill="#0a0e17" /> -->
+  
+  <!-- رمز البرق (مأخوذ من أيقونات مفتوحة المصدر) -->
+  <path d="M55 15 L35 55 H50 L45 85 L70 40 H55 L60 15 Z" 
+        fill="#5ec4d4" 
+        stroke="#5ec4d4" 
+        stroke-width="2" 
+        stroke-linejoin="round"/>
+</svg>

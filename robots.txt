@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hadjer-ai-web.github.io/HabitQuest/sitemap.xml

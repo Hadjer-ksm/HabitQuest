@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+    <!-- ============================================================ -->
+    <!-- 1. الأساسيات (Character Encoding, Viewport, Title)            -->
+    <!-- ============================================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>HabitQuest – Gamified Habit Tracker for Daily Goals &amp; Productivity</title>
+
+    <!-- ============================================================ -->
+    <!-- 2. تحسينات محركات البحث (SEO الأساسية)                       -->
+    <!-- ============================================================ -->
+    <meta name="description" content="HabitQuest is a free gamified habit tracker that helps you build daily routines, earn XP, level up, and stay motivated. Track habits, monitor streaks, and achieve your goals with rewards.">
+    <meta name="keywords" content="habit tracker, gamified habit tracker, daily goals, productivity, self-improvement, streak tracker, XP, level up, rewards, habit building, routine planner, goal setting">
+    <meta name="author" content="hadjer-ai-web">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    <meta name="revisit-after" content="7 days">
+    <meta name="copyright" content="2026 HabitQuest">
+
+    <!-- ============================================================ -->
+    <!-- 3. الرابط الأساسي (Canonical) + الملفات التنظيمية            -->
+    <!-- ============================================================ -->
+    <link rel="canonical" href="https://hadjer-ai-web.github.io/HabitQuest/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml">
+
+    <!-- ============================================================ -->
+    <!-- 4. ألوان الوضع (Theme Color)                                  -->
+    <!-- ============================================================ -->
+    <meta name="theme-color" content="#0a0e17" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)">
+
+    <!-- ============================================================ -->
+    <!-- 5. Open Graph (فيسبوك، واتساب، لينكد إن، تليجرام)            -->
+    <!-- ============================================================ -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="HabitQuest – Gamified Habit Tracker">
+    <meta property="og:description" content="Track your habits with gamification: earn XP, level up, and unlock rewards. Start building better habits today!">
+    <meta property="og:url" content="https://hadjer-ai-web.github.io/HabitQuest/">
+    <!-- المسار: الصورة موجودة في نفس المجلد -->
+    <meta property="og:image" content="https://hadjer-ai-web.github.io/HabitQuest/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="HabitQuest">
+    <meta property="og:locale" content="en_US">
+
+    <!-- ============================================================ -->
+    <!-- 6. Twitter Cards                                             -->
+    <!-- ============================================================ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HabitQuest – Gamified Habit Tracker">
+    <meta name="twitter:description" content="Earn XP, level up, and build habits with HabitQuest. Your gamified daily routine companion.">
+    <meta name="twitter:image" content="https://hadjer-ai-web.github.io/HabitQuest/og-image.png">
+    <meta name="twitter:site" content="@habitquest">
+
+    <!-- ============================================================ -->
+    <!-- 7. البيانات المنظمة (JSON-LD) – Schema.org                   -->
+    <!-- ============================================================ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "HabitQuest",
+      "description": "A gamified habit tracker that helps users build daily routines, earn XP, level up, and stay motivated with rewards.",
+      "applicationCategory": ["ProductivityApplication", "GameApplication"],
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "featureList": [
+        "Offline-first Progressive Web App",
+        "Gamified daily routine tracking with XP and levels",
+        "Streak tracking",
+        "Custom reward shop",
+        "Multi-language support (English, French, Arabic) with RTL"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "hadjer-ai-web"
+      },
+      "url": "https://hadjer-ai-web.github.io/HabitQuest/"
+    }
+    </script>
+
+    <!-- ============================================================ -->
+    <!-- 8. أيقونات الموقع (Favicon, PWA, Apple Touch)               -->
+    <!-- ============================================================ -->
+    <!-- ✅ تم التعديل: إزالة /HabitQuest/ لأن الملفات في نفس المجلد -->
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- ============================================================ -->
+    <!-- 9. إعدادات iOS (عند تثبيت التطبيق على iPhone/iPad)           -->
+    <!-- ============================================================ -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HabitQuest">
+
+    <!-- ============================================================ -->
+    <!-- 10. تحسين الأداء: اتصال مسبق (Preconnect)                    -->
+    <!-- ============================================================ -->
+    <!-- ملاحظة: أنت لا تستخدم Google Fonts حالياً، لكن وجودها لا يضر -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+    <!-- ============================================================ -->
+    <!-- 11. ملفات الأنماط (CSS)                                      -->
+    <!-- ============================================================ -->
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ============================================================ -->
+    <!-- 12. ملفات الجافاسكريبت (JavaScript)                         -->
+    <!-- ============================================================ -->
+    <!-- ✅ تم الإضافة: defer لضمان تحميل HTML أولاً ثم تنفيذ الكود -->
+    <script src="script.js" defer></script>
+
+</head>
+<body>
+    <div class="bg-ambient" aria-hidden="true">
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+    </div>
+    <div class="toast-container" id="toastContainer" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div id="modalRoot"></div>
+
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <span class="logo-icon-svg" id="logoIcon"></span>
+                <span class="label-text">HabitQuest</span>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav"></nav>
+            <div class="sidebar-footer">
+    <button class="btn btn-sm btn-secondary" id="btnThemeToggle" style="width:100%;justify-content:center;" aria-label="Toggle theme"><span aria-hidden="true">🌓</span></button>
+</div>
+        </aside>
+
+        
+
+        <main class="main-content" id="mainContent"></main>
+    </div>
+
+</body>
+</html>
