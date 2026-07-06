@@ -1,13 +1,14 @@
 // ============================================================
-//  Service Worker – HabitQuest PWA (v2.1)
+//  Service Worker – HabitQuest PWA (v2.1.1)
 //  استراتيجية تخزين متقدمة: Stale-While-Revalidate + Cache-First
 //  يدعم التحديثات التلقائية وإدارة الكاش بذكاء
 //  تم التحديث للنطاق الجديد: habitquest-705.pages.dev
+//  إصلاح خطأ event not defined في staleWhileRevalidateStrategy
 // ============================================================
 
-const CACHE_NAME = 'habitquest-v2.1.0';
-const STATIC_CACHE = 'habitquest-static-v2.1.0';
-const DYNAMIC_CACHE = 'habitquest-dynamic-v2.1.0';
+const CACHE_NAME = 'habitquest-v2.1.1';
+const STATIC_CACHE = 'habitquest-static-v2.1.1';
+const DYNAMIC_CACHE = 'habitquest-dynamic-v2.1.1';
 
 // قائمة الملفات الأساسية التي سيتم تخزينها مسبقاً (Pre-cache)
 const STATIC_ASSETS = [
@@ -41,7 +42,7 @@ self.addEventListener('install', (event) => {
       })
       .then(() => {
         console.log('[SW] Skip waiting');
-        return self.skipWaiting(); // فعّل الخدمة فوراً
+        return self.skipWaiting();
       })
       .catch((error) => {
         console.error('[SW] Installation failed:', error);
@@ -72,7 +73,7 @@ self.addEventListener('activate', (event) => {
       })
       .then(() => {
         console.log('[SW] Claiming clients');
-        return self.clients.claim(); // يسيطر على الصفحات المفتوحة فوراً
+        return self.clients.claim();
       })
       .catch((error) => {
         console.error('[SW] Activation failed:', error);
@@ -100,12 +101,12 @@ self.addEventListener('fetch', (event) => {
 
   // ---------- استراتيجية 2: Stale-While-Revalidate للملفات الديناميكية (الصور، الخطوط، إلخ) ----------
   if (shouldCacheDynamically(url.pathname)) {
-    event.respondWith(staleWhileRevalidateStrategy(request));
+    // ✅ تمرير event إلى الدالة
+    event.respondWith(staleWhileRevalidateStrategy(request, event));
     return;
   }
 
   // ---------- استراتيجية 3: Network-First (للصفحات الداخلية أو أي طلبات خاصة) ----------
-  // نطبقها على الطلبات التي تحوي "page" في المسار، أو طلبات الـ HTML العامة
   if (request.mode === 'navigate' || url.pathname.endsWith('.html')) {
     event.respondWith(networkFirstStrategy(request));
     return;
@@ -115,7 +116,6 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(request)
       .then((response) => {
-        // نخزن النسخة في الكاش الديناميكي للاستخدام المستقبلي
         if (response && response.status === 200) {
           const clone = response.clone();
           caches.open(DYNAMIC_CACHE)
@@ -125,7 +125,6 @@ self.addEventListener('fetch', (event) => {
         return response;
       })
       .catch(() => {
-        // إذا فشل كل شيء، نعيد صفحة Offline مخصصة
         return new Response('⚠️ Offline – Please check your connection.', {
           status: 503,
           statusText: 'Service Unavailable',
@@ -157,7 +156,6 @@ async function cacheFirstStrategy(request) {
     return network;
   } catch (error) {
     console.warn('[SW] Cache-First: network failed for', request.url);
-    // نعيد صفحة Offline إذا كان الطلب لصفحة HTML
     if (request.headers.get('accept')?.includes('text/html')) {
       return new Response('🌐 Offline – Please reconnect.', {
         status: 503,
@@ -170,7 +168,8 @@ async function cacheFirstStrategy(request) {
 }
 
 // 4.2 Stale-While-Revalidate (يعطي الكاش أولاً، ويحدث في الخلفية)
-async function staleWhileRevalidateStrategy(request) {
+// ✅ تم إضافة event كمعامل ثانٍ
+async function staleWhileRevalidateStrategy(request, event) {
   const cached = await caches.match(request);
   const networkPromise = fetch(request)
     .then((response) => {
@@ -185,16 +184,14 @@ async function staleWhileRevalidateStrategy(request) {
     .catch(() => {});
 
   if (cached) {
-    // أعد الكاش فوراً، ثم حدّث في الخلفية دون انتظار
-    event.waitUntil(networkPromise); // لا ننتظر النتيجة، فقط نطلقها
+    // ✅ event الآن معرف
+    event.waitUntil(networkPromise);
     return cached;
   }
 
-  // إذا لم يكن في الكاش، انتظر الشبكة
   const network = await networkPromise;
   if (network) return network;
 
-  // إذا فشل كل شيء، أعد صفحة Offline بديلة
   return new Response('🔄 No connection & no cache.', {
     status: 503,
     statusText: 'Service Unavailable'
@@ -216,7 +213,6 @@ async function networkFirstStrategy(request) {
     console.warn('[SW] Network-First: falling back to cache', request.url);
     const cached = await caches.match(request);
     if (cached) return cached;
-    // إذا لم يوجد كاش، نعيد صفحة Offline
     return new Response('📴 You are offline. Please try again later.', {
       status: 503,
       statusText: 'Service Unavailable'
@@ -228,7 +224,6 @@ async function networkFirstStrategy(request) {
 //  5. دوال مساعدة (Helper Functions)
 // ============================================================
 
-// تحديد ما إذا كان المورد يستحق التخزين الديناميكي (حسب الامتداد)
 function shouldCacheDynamically(pathname) {
   return DYNAMIC_EXTENSIONS.some((ext) => pathname.endsWith(ext));
 }
