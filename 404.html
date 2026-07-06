@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | HabitQuest</title>
+    
+    <style>
+        /* ============================================================
+           DESIGN SYSTEM – متطابق مع التطبيق الرئيسي
+           ============================================================ */
+        :root {
+            --font-primary: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-arabic: 'Segoe UI', 'Arabic Typesetting', 'Traditional Arabic', Tahoma, sans-serif;
+            
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-glow: 0 0 60px rgba(94, 196, 212, 0.3);
+            
+            --glass-blur: 20px;
+            --glass-blur-strong: 24px;
+        }
+
+        /* ---- الثيم الداكن (افتراضي) ---- */
+        [data-theme="dark"] {
+            --bg-primary: #0a0e17;
+            --bg-card: #151a25;
+            --bg-glass: rgba(22, 28, 40, 0.7);
+            --text-primary: #e8ecf2;
+            --text-secondary: #a0aab8;
+            --text-tertiary: #6b7484;
+            --accent: #5ec4d4;
+            --accent-glow: rgba(94, 196, 212, 0.5);
+            --accent2: #a78bfa;
+            --accent3: #f59e4b;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(255, 255, 255, 0.15);
+            --glass-fallback-bg: #151c28;
+            --overlay: rgba(0, 0, 0, 0.6);
+        }
+
+        /* ---- الثيم الفاتح ---- */
+        [data-theme="light"] {
+            --bg-primary: #f5f6f8;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.75);
+            --text-primary: #1a1d24;
+            --text-secondary: #5a6070;
+            --text-tertiary: #8b92a0;
+            --accent: #2d9daa;
+            --accent-glow: rgba(45, 157, 170, 0.4);
+            --accent2: #7c5ce7;
+            --accent3: #e88a30;
+            --border: rgba(0, 0, 0, 0.06);
+            --border-strong: rgba(0, 0, 0, 0.12);
+            --glass-fallback-bg: #ffffff;
+            --overlay: rgba(0, 0, 0, 0.35);
+        }
+
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.4s ease, color 0.4s ease;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        [dir="rtl"] body {
+            font-family: var(--font-arabic);
+        }
+
+        /* ============================================================
+           خلفية متحركة (Orbs) – نفس التطبيق الرئيسي
+           ============================================================ */
+        .bg-ambient {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.25;
+            animation: orbFloat 18s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        .bg-orb:nth-child(1) {
+            width: 450px;
+            height: 450px;
+            background: var(--accent);
+            top: -20%;
+            left: -15%;
+            animation-delay: 0s;
+        }
+        .bg-orb:nth-child(2) {
+            width: 350px;
+            height: 350px;
+            background: var(--accent2);
+            bottom: -15%;
+            right: -10%;
+            animation-delay: -6s;
+            animation-duration: 22s;
+        }
+        .bg-orb:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            background: var(--accent3);
+            top: 50%;
+            left: 60%;
+            animation-delay: -10s;
+            animation-duration: 20s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(60px, -40px) scale(1.08); }
+            50% { transform: translate(-30px, 50px) scale(0.94); }
+            75% { transform: translate(-50px, -30px) scale(1.05); }
+        }
+
+        /* ============================================================
+           البطاقة الرئيسية (Glassmorphism)
+           ============================================================ */
+        .error-card {
+            position: relative;
+            z-index: 1;
+            background: var(--glass-fallback-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 48px 40px 40px;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: all var(--transition-smooth);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+        }
+
+        .error-card:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* ---- الأيقونة الكبيرة (404 SVG) ---- */
+        .error-icon {
+            font-size: 6rem;
+            line-height: 1;
+            margin-bottom: 8px;
+            display: block;
+            animation: floatIcon 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px var(--accent-glow));
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-12px) scale(1.04); }
+        }
+
+        /* ---- النصوص ---- */
+        .error-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .error-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .error-description {
+            font-size: 0.95rem;
+            color: var(--text-tertiary);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        /* ---- زر العودة ---- */
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--accent);
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            box-shadow: 0 4px 20px var(--accent-glow);
+            text-decoration: none;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--accent-glow);
+        }
+
+        .btn-home:active {
+            transform: scale(0.96);
+        }
+
+        .btn-home svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-home:hover svg {
+            transform: translateX(-4px);
+        }
+
+        [dir="rtl"] .btn-home:hover svg {
+            transform: translateX(4px) rotate(180deg);
+        }
+
+        /* ---- زر تبديل الثيم (صغير وأنيق) ---- */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all var(--transition-smooth);
+            backdrop-filter: blur(var(--glass-blur-strong));
+            -webkit-backdrop-filter: blur(var(--glass-blur-strong));
+        }
+
+        [dir="rtl"] .theme-toggle {
+            right: auto;
+            left: 20px;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--border-strong);
+            color: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        /* ============================================================
+           التجاوب مع الهواتف
+           ============================================================ */
+        @media (max-width: 480px) {
+            .error-card {
+                padding: 32px 20px 28px;
+            }
+            .error-icon {
+                font-size: 4.5rem;
+            }
+            .error-title {
+                font-size: 1.8rem;
+            }
+            .error-subtitle {
+                font-size: 0.95rem;
+            }
+            .error-description {
+                font-size: 0.85rem;
+            }
+            .btn-home {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+            .theme-toggle {
+                top: 12px;
+                right: 12px;
+                padding: 8px 12px;
+                font-size: 1rem;
+            }
+            [dir="rtl"] .theme-toggle {
+                right: auto;
+                left: 12px;
+            }
+        }
+
+        /* ---- تقليل الحركة للمستخدمين الذين يفضلونها ---- */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    الخلفية المتحركة
+    ============================================================ -->
+    <div class="bg-ambient" aria-hidden="true">
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+    </div>
+
+    <!-- ============================================================
+    زر تبديل الثيم
+    ============================================================ -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        🌓
+    </button>
+
+    <!-- ============================================================
+    البطاقة الرئيسية
+    ============================================================ -->
+    <div class="error-card" role="main">
+        <span class="error-icon" aria-hidden="true">🔮</span>
+        <h1 class="error-title" id="errorTitle">404</h1>
+        <p class="error-subtitle" id="errorSubtitle">Oops! Page Not Found</p>
+        <p class="error-description" id="errorDescription">
+            The page you're looking for doesn't exist or has been moved.
+            But don't worry, every great adventure has a few detours!
+        </p>
+        <a href="./" class="btn-home" id="homeButton">
+            <svg viewBox="0 0 24 24">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span id="homeLabel">🏠 Back to Home</span>
+        </a>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT – ديناميكي حسب اللغة والثيم
+    ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // 1. الترجمة (i18n)
+            // ============================================================
+            const translations = {
+                en: {
+                    title: '404',
+                    subtitle: 'Oops! Page Not Found',
+                    description: 'The page you\'re looking for doesn\'t exist or has been moved. But don\'t worry, every great adventure has a few detours!',
+                    home: '🏠 Back to Home',
+                    icon: '🔮'
+                },
+                fr: {
+                    title: '404',
+                    subtitle: 'Oups ! Page non trouvée',
+                    description: 'La page que vous recherchez n\'existe pas ou a été déplacée. Ne vous inquiétez pas, chaque grande aventure a quelques détours !',
+                    home: '🏠 Retour à l\'accueil',
+                    icon: '🔮'
+                },
+                ar: {
+                    title: '٤٠٤',
+                    subtitle: 'عذراً! الصفحة غير موجودة',
+                    description: 'الصفحة التي تبحث عنها غير موجودة أو تم نقلها. لا تقلق، كل رحلة عظيمة تمر ببعض المنعطفات!',
+                    home: '🏠 العودة إلى الرئيسية',
+                    icon: '🔮'
+                }
+            };
+
+            // ============================================================
+            // 2. تحديد اللغة المفضلة للمستخدم
+            // ============================================================
+            function getPreferredLanguage() {
+                // 2.1 نفحص localStorage (حفظ لغة المستخدم من التطبيق الرئيسي)
+                try {
+                    const savedLang = localStorage.getItem('habitquest-language');
+                    if (savedLang && translations[savedLang]) {
+                        return savedLang;
+                    }
+                } catch (_) {}
+
+                // 2.2 نفحص لغة المتصفح
+                const browserLang = navigator.language || navigator.languages?.[0] || 'en';
+                const lang = browserLang.split('-')[0]; // 'ar', 'fr', 'en'
+                if (translations[lang]) {
+                    return lang;
+                }
+
+                // 2.3 اللغة الافتراضية
+                return 'en';
+            }
+
+            // ============================================================
+            // 3. تطبيق اللغة والثيم
+            // ============================================================
+            const lang = getPreferredLanguage();
+            const t = translations[lang] || translations.en;
+
+            // تحديث محتوى الصفحة
+            document.getElementById('errorTitle').textContent = t.title;
+            document.getElementById('errorSubtitle').textContent = t.subtitle;
+            document.getElementById('errorDescription').textContent = t.description;
+            document.getElementById('homeLabel').textContent = t.home;
+            document.querySelector('.error-icon').textContent = t.icon;
+
+            // تحديث اتجاه الصفحة (RTL للعربية)
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+
+            // تحديث خط الجسم (خط عربي للمستخدمين العرب)
+            if (lang === 'ar') {
+                document.body.style.fontFamily = 'var(--font-arabic)';
+            }
+
+            // ============================================================
+            // 4. الثيم (Dark/Light) – مزامنة مع التطبيق الرئيسي
+            // ============================================================
+            function getPreferredTheme() {
+                try {
+                    const savedTheme = localStorage.getItem('habitquest-theme');
+                    if (savedTheme === 'dark' || savedTheme === 'light') {
+                        return savedTheme;
+                    }
+                } catch (_) {}
+
+                // نفحص تفضيل النظام
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    return 'light';
+                }
+                return 'dark';
+            }
+
+            const theme = getPreferredTheme();
+            document.documentElement.setAttribute('data-theme', theme);
+
+            // زر تبديل الثيم
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                try {
+                    localStorage.setItem('habitquest-theme', newTheme);
+                } catch (_) {}
+            });
+
+            // تحديث أيقونة الزر حسب الثيم
+            function updateToggleIcon() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+            }
+            updateToggleIcon();
+
+            // مراقبة تغيير الثيم لتحديث الأيقونة
+            const observer = new MutationObserver(updateToggleIcon);
+            observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+            // ============================================================
+            // 5. زر العودة إلى الصفحة الرئيسية (يحافظ على اللغة)
+            // ============================================================
+            const homeButton = document.getElementById('homeButton');
+            homeButton.addEventListener('click', function(e) {
+                // نمرر اللغة عبر الـ URL لتطبيق HabitQuest يستقبلها
+                window.location.href = './?lang=' + lang;
+            });
+
+            console.log('✅ 404 page loaded successfully! Language:', lang, 'Theme:', theme);
+
+        })();
+    </script>
+
+</body>
+</html>
