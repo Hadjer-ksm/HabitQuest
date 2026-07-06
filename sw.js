@@ -1,24 +1,27 @@
 // ============================================================
-//  Service Worker – HabitQuest PWA (v2.0)
+//  Service Worker – HabitQuest PWA (v2.1)
 //  استراتيجية تخزين متقدمة: Stale-While-Revalidate + Cache-First
 //  يدعم التحديثات التلقائية وإدارة الكاش بذكاء
+//  تم التحديث للنطاق الجديد: habitquest-705.pages.dev
 // ============================================================
 
-const CACHE_NAME = 'habitquest-v2.0.0';
-const STATIC_CACHE = 'habitquest-static-v2.0.0';
-const DYNAMIC_CACHE = 'habitquest-dynamic-v2.0.0';
+const CACHE_NAME = 'habitquest-v2.1.0';
+const STATIC_CACHE = 'habitquest-static-v2.1.0';
+const DYNAMIC_CACHE = 'habitquest-dynamic-v2.1.0';
 
 // قائمة الملفات الأساسية التي سيتم تخزينها مسبقاً (Pre-cache)
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './style.css',
+  './script.js',
+  './animations.css',
   './favicon.ico',
   './favicon.svg',
   './apple-touch-icon.png',
   './robots.txt',
-  './sitemap.xml',
-  './animations.css'        // أضفنا ملف التأثيرات
+  './sitemap.xml'
 ];
 
 // امتدادات الملفات التي سيتم تخزينها ديناميكياً (عند الطلب)
