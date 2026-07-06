@@ -22,6 +22,7 @@ const STATIC_ASSETS = [
   './favicon.svg',
   './apple-touch-icon.png',
   './robots.txt',
+  './404.html',
   './sitemap.xml'
 ];
 
