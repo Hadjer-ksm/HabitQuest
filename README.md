@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://hadjer-ai-web.github.io/HabitQuest/"><strong>🌐 Live Demo / تشغيل التطبيق</strong></a> &nbsp;·&nbsp;
+  <a href="https://habitquest-705.pages.dev/"><strong>🌐 Live Demo / تشغيل التطبيق</strong></a> &nbsp;·&nbsp;
   <a href="#-how-to-run-locally-التشغيل-المحلي"><strong>📂 Run Locally</strong></a>
 </p>
 
@@ -75,7 +75,6 @@ Navigate to the project folder (الدخول إلى مجلد المشروع):
 bash
 cd HabitQuest
 Run a local server (تشغيل خادم محلي):
-
 You can use any static server. For example, using VS Code with the "Live Server" extension, or using Python:
 
 bash
@@ -86,7 +85,6 @@ Or using Node.js (if you have http-server installed):
 bash
 npx http-server -p 8000
 Open your browser (افتح المتصفح):
-
 Navigate to http://localhost:8000 and start using HabitQuest!
 
 🤝 Contributing / المساهمة
